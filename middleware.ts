@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 
 export default withAuth(
     function middleware(req){
-     console.log(req.nextauth.token)   
+     console.log(req.nextauth.token?.role)   
     }
 )
 

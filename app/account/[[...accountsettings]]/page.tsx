@@ -1,5 +1,5 @@
-"use client";
-import { useSession, signIn, signOut } from "next-auth/react";
+"use server";
+import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -26,12 +26,12 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Sidebar from "@/components/Sidebar";
 
-export default function Page({
+export default async function Page({
   params,
 }: {
   params: { accountsettings: string };
 }) {
-  const { data: session } = useSession();
+  const session  = await getServerSession();
   const path =
     params.accountsettings !== undefined
       ? params.accountsettings.toString()

@@ -5,7 +5,6 @@ type Props = {
     date: Date
 }
 export default function Notifications({ title, description, date }: Props) {
-    console.log(date)
     return (
         <>
             {/* TODO:MAKE IT SCROLLABLE */}

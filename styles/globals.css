@@ -3,15 +3,14 @@
 @tailwind utilities;
 
 @layer base {
-  
-:root  {
+  :root {
     --background: 224 100% 95%;
     --foreground: 224 5% 0%;
     --card: 224 50% 90%;
     --card-foreground: 224 5% 10%;
     --popover: 224 100% 95%;
     --popover-foreground: 224 100% 0%;
-    --primary: 224 68.2% 91.4%;
+    --primary: 224 68.2% 8.6%;
     --primary-foreground: 0 0% 0%;
     --secondary: 224 30% 70%;
     --secondary-foreground: 0 0% 0%;
@@ -27,7 +26,7 @@
     --radius: 0.5rem;
     --text: 98 80% 2%;
   }
-  .dark  {
+  .dark {
     --background: 224 50% 5%;
     --foreground: 224 5% 90%;
     --card: 224 50% 0%;
@@ -50,7 +49,6 @@
     --radius: 0.5rem;
     --text: 98 80% 98%;
   }
-  
 }
 
 @layer base {
