@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
@@ -14,32 +14,99 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RedirectType, redirect } from "next/navigation";
+import { ChangeEvent, FormEvent, useState } from "react";
+
+type LoginInput = {
+  email: string;
+  password: string;
+};
 
 export default function Page() {
-  const { data: session } = useSession()
+  const { data: session } = useSession();
+  const [inputs, setInputs] = useState<LoginInput>({ email: "", password: "" });
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
+
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    await signIn("credentials", {
+      email: inputs.email,
+      password: inputs.password,
+      callbackUrl: "/",
+    });
+  };
   if (!session) {
     return (
       <>
-        <Card className="mx-auto mt-20 max-w-sm">
+        <Card className="mx-auto mt-2 max-w-sm">
           <CardHeader>
             <CardTitle className="text-2xl text-center">Login</CardTitle>
-            <CardDescription className="text-center">Login to TechBlog</CardDescription>
+            <CardDescription className="text-center">
+              Login to TechBlog
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid gap-4">
-              <Button onClick={() => signIn('github')} variant="outline" className="w-full">
-                <FaGithub className="mr-3" />Login with GitHub
+              <Button
+                onClick={() => signIn("github")}
+                variant="outline"
+                className="w-full"
+              >
+                <FaGithub className="mr-3" />
+                Login with GitHub
               </Button>
-              <Button onClick={() => signIn('google')} variant="outline" className="w-full">
-                <FaGoogle className="mr-3" />Login with Google
+              <Button
+                onClick={() => signIn("google")}
+                variant="outline"
+                className="w-full"
+              >
+                <FaGoogle className="mr-3" />
+                Login with Google
               </Button>
+
+              <hr />
+
+              {/* credentials */}
+
+              <form onSubmit={handleSubmit} className="grid gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    name="email"
+                    placeholder="m@example.com"
+                    required
+                    onChange={(e) => handleChange(e)}
+                    value={inputs.email}
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <div className="flex items-center">
+                    <Label htmlFor="password">Password</Label>
+                  </div>
+                  <Input
+                    id="password"
+                    type="password"
+                    name="password"
+                    required
+                    onChange={(e) => handleChange(e)}
+                    value={inputs.password}
+                  />
+                </div>
+                <Button type="submit" variant="outline" className="w-full">
+                  Login
+                </Button>
+              </form>
             </div>
           </CardContent>
         </Card>
       </>
     );
-  }
-  else {
-    redirect('/', RedirectType.replace)
+  } else {
+    redirect("/", RedirectType.replace);
   }
 }

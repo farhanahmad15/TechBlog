@@ -3,9 +3,8 @@ import { NextResponse } from 'next/server'
 
 export default withAuth(
     function middleware(req){
-        console.log('withaout')
-        console.log(req)
+     console.log(req.nextauth.token)   
     }
 )
 
-export const config = {matcher : ['/account']}
+export const config = {matcher : ['/account/:path*']}
