@@ -32,9 +32,6 @@ export default function Page({
   params: { accountsettings: string };
 }) {
   const { data: session } = useSession();
-  if (!session) {
-    redirect("/api/auth/signin");
-  }
   const path =
     params.accountsettings !== undefined
       ? params.accountsettings.toString()

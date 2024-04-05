@@ -2,9 +2,17 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { IoNotifications } from "react-icons/io5";
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { useSession, signIn, signOut } from "next-auth/react"
-
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { useSession, signIn, signOut } from "next-auth/react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,12 +29,83 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import ThemeSwitcher from "./ThemeSwitcher";
 import Notifications from "./Notifications";
-// TODO:convert the theme switcher to a component
 const notifications = [
-  { name: 'Notification', description: 'RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ', date: new Date() }, { name: 'Notification', description: 'RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ', date: new Date() }, { name: 'Notification', description: 'RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ', date: new Date() }, { name: 'Notification', description: 'RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ', date: new Date() }, { name: 'Notification', description: 'RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ', date: new Date() }, { name: 'Notification', description: 'RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ', date: new Date() }, { name: 'Notification', description: 'RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ', date: new Date() }, { name: 'Notification', description: 'RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ', date: new Date() }, { name: 'Notification', description: 'RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ', date: new Date() }, { name: 'Notification', description: 'RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ', date: new Date() }, { name: 'Notification', description: 'RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ', date: new Date() }, { name: 'Notification', description: 'RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ', date: new Date() },
-]
+  {
+    name: "Notification",
+    description:
+      "RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ",
+    date: new Date(),
+  },
+  {
+    name: "Notification",
+    description:
+      "RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ",
+    date: new Date(),
+  },
+  {
+    name: "Notification",
+    description:
+      "RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ",
+    date: new Date(),
+  },
+  {
+    name: "Notification",
+    description:
+      "RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ",
+    date: new Date(),
+  },
+  {
+    name: "Notification",
+    description:
+      "RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ",
+    date: new Date(),
+  },
+  {
+    name: "Notification",
+    description:
+      "RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ",
+    date: new Date(),
+  },
+  {
+    name: "Notification",
+    description:
+      "RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ",
+    date: new Date(),
+  },
+  {
+    name: "Notification",
+    description:
+      "RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ",
+    date: new Date(),
+  },
+  {
+    name: "Notification",
+    description:
+      "RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ",
+    date: new Date(),
+  },
+  {
+    name: "Notification",
+    description:
+      "RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ",
+    date: new Date(),
+  },
+  {
+    name: "Notification",
+    description:
+      "RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ",
+    date: new Date(),
+  },
+  {
+    name: "Notification",
+    description:
+      "RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST RESTTEST ",
+    date: new Date(),
+  },
+];
 function Header() {
-  const {data: session} = useSession()
+  const { data: session } = useSession();
+  const [modalOpen, setModalOpen] = useState(false)
   return (
     <>
       <header className="bg-background text-text body-font border-b-gray-300 border-b-[1px]">
@@ -79,40 +158,60 @@ function Header() {
                   <IoNotifications className="size-6 text-text" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <ScrollArea className='h-80'>
+                  <ScrollArea className="h-80">
                     {notifications.map((notification, index) => (
-                      <Notifications key={index} title={notification.name} description={notification.description} date={notification.date} />
+                      <Notifications
+                        key={index}
+                        title={notification.name}
+                        description={notification.description}
+                        date={notification.date}
+                      />
                     ))}
-
                   </ScrollArea>
                 </DropdownMenuContent>
               </DropdownMenu>
               {/* THEME SWITCH */}
               <ThemeSwitcher />
               {/* SETTINGS */}
-              <DropdownMenu>
-                <DropdownMenuTrigger className="mx-2">
-                  <Avatar className="size-7">
-                    <AvatarImage src={session?.user?.image??""} />
-                    <AvatarFallback>{session?.user?.name??""}</AvatarFallback>
-                  </Avatar>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem>
-                    <Link href="/account">My Account</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="/">My Posts</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-
-                  <DropdownMenuItem>
-                    <Link href="/" onClick={() => signOut()} className="text-red-600">
-                      Logout
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="mx-2">
+                    <Avatar className="size-7">
+                      <AvatarImage src={session?.user?.image ?? ""} />
+                      <AvatarFallback>
+                        {session?.user?.name ?? ""}
+                      </AvatarFallback>
+                    </Avatar>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem>
+                      <Link href="/account">My Account</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Link href="/">My Posts</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DialogTrigger asChild >
+                      <DropdownMenuItem>
+                        <span
+                          className="text-red-600 m-1 "
+                        >
+                          Logout
+                        </span>
+                      </DropdownMenuItem>
+                    </DialogTrigger>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Are You Sure You want to Logout?</DialogTitle>
+                  </DialogHeader>
+                  <DialogFooter>
+                    <Button variant={"default"} onClick={()=>setModalOpen(false)}>No</Button>
+                    <Button variant={"destructive"} onClick={() => signOut()}>Yes</Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </>
           ) : (
             <ThemeSwitcher />
