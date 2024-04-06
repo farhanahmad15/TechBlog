@@ -41,7 +41,8 @@ export const authOptions: NextAuthOptions = {
           }
         });
         if (user) {
-          return user;
+          return user
+          
         } else {
           return null;
         }
@@ -86,12 +87,16 @@ export const authOptions: NextAuthOptions = {
 
     },
     async jwt({ token, user }) {
-      if(user) token.role = user.role
-      return token
-    },
-    async session({ session, token }) {
-      if(session?.user) session.user.role = token.role
-      return session
+      if (user) {
+        token.role = user.role; // add the user role to the token
+      }
+      return token;
     }
+    ,
+    async session({ session, token }) {
+      if (session?.user) session.user.role = token.role; // add the user role to the session
+      return session;
+    }
+    
   },
 };

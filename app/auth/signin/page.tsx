@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RedirectType, redirect } from "next/navigation";
 import { useFormState, useFormStatus } from "react-dom";
+import Link from "next/link";
 
 
 const initialState = {
@@ -97,9 +98,15 @@ export default function Page() {
                 <Button type="submit" variant="outline" className="w-full" disabled={pending}>
                   Login
                 </Button>
-                <h1 className="sr-only">{state?.message}</h1>
+                <h1 className="">{state?.message}</h1>
               </form>
             </div>
+            <div className="mt-4 text-center text-sm">
+          Don&apos;t have an account?{" "}
+          <Link href="/auth/signup" className="underline">
+            Sign up
+          </Link>
+        </div>
           </CardContent>
         </Card>
       </>

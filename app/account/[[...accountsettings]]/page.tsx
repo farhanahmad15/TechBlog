@@ -30,9 +30,7 @@ export default async function Page({
             Welcome, {session?.user?.name ?? "User Name"}
           </p>
           <p>
-            {
-              session?.user
-            }
+            
           </p>
         </center>
       </div>
