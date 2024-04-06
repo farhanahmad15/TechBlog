@@ -7,27 +7,35 @@ declare module "next-auth" {
   interface Session {
     user: {
       uid: string;
-      role: string;
+      role: Role;
       name?: string | null;
       email: string;
       image?: string | "https://dummyimage.com/400x400";
+      provider: "Google" | "Github" | "Credentials"
     };
   }
 
   interface User {
     id: int;
     uid: string;
-    role: string;
+    role: Role;
     name: string;
     email: string;
     password: string | null;
     image: string;
-    provider: string;
+    provider: "Google" | "Github" | "Credentials"
+  }
+
+  interface Role{
+    role: "User" | "Admin"
   }
 }
 
 declare module "next-auth/jwt" {
   interface JWT extends DefaultJWT {
-    role: string;
+    role: Role;
+  }
+  interface Role{
+    role: "User" | "Admin"
   }
 }

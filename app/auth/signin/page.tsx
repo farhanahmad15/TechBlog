@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { FaGithub, FaGoogle } from "react-icons/fa";
@@ -14,30 +13,32 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RedirectType, redirect } from "next/navigation";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { useFormState, useFormStatus } from "react-dom";
 
-type LoginInput = {
-  email: string;
-  password: string;
-};
+
+const initialState = {
+  message: '',
+}
+
+
+function signin(prevState:any,formData: FormData){
+ try {
+    signIn('credentials',{
+      email: formData.get('email'),
+      password: formData.get('password'),
+      callbackUrl: '/'
+    })
+    return{message: 'Signin Success'}
+ } catch (error) {
+    return {message: `${error}`}
+ }
+}
 
 export default function Page() {
+  const {pending} = useFormStatus()
+  const [state, formAction] = useFormState(signin, initialState)
   const { data: session } = useSession();
-  const [inputs, setInputs] = useState<LoginInput>({ email: "", password: "" });
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
-  };
 
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
-    await signIn("credentials", {
-      email: inputs.email,
-      password: inputs.password,
-      callbackUrl: "/",
-    });
-  };
   if (!session) {
     return (
       <>
@@ -71,7 +72,7 @@ export default function Page() {
 
               {/* credentials */}
 
-              <form onSubmit={handleSubmit} className="grid gap-4">
+              <form action={formAction} className="grid gap-4">
                 <div className="grid gap-2">
                   <Label htmlFor="email">Email</Label>
                   <Input
@@ -80,8 +81,6 @@ export default function Page() {
                     name="email"
                     placeholder="m@example.com"
                     required
-                    onChange={(e) => handleChange(e)}
-                    value={inputs.email}
                   />
                 </div>
                 <div className="grid gap-2">
@@ -93,13 +92,12 @@ export default function Page() {
                     type="password"
                     name="password"
                     required
-                    onChange={(e) => handleChange(e)}
-                    value={inputs.password}
                   />
                 </div>
-                <Button type="submit" variant="outline" className="w-full">
+                <Button type="submit" variant="outline" className="w-full" disabled={pending}>
                   Login
                 </Button>
+                <h1 className="sr-only">{state?.message}</h1>
               </form>
             </div>
           </CardContent>

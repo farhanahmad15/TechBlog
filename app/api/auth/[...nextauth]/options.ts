@@ -1,3 +1,4 @@
+
 import type { NextAuthOptions } from "next-auth";
 import GithubProvider, { GithubProfile } from "next-auth/providers/github";
 import GoogleProvider, { GoogleProfile } from "next-auth/providers/google";
@@ -32,14 +33,13 @@ export const authOptions: NextAuthOptions = {
         // This is where you need to retrieve user data
         // to verify with credentials
         // Docs: https://next-auth.js.org/configuration/providers/credentials
-        const user = await prisma.user.findMany({
+        const user = await prisma.user.findUnique({
           where: {
             email: credentials?.email,
-            password: credentials?.password,
-            provider: 'Credentials'
-          },
+            uid: credentials?.email,
+            password: credentials?.password
+          }
         });
-
         if (user) {
           return user;
         } else {
@@ -50,6 +50,7 @@ export const authOptions: NextAuthOptions = {
   ],
   pages: {
     signIn: "/auth/signin",
+    
   },
   callbacks: {
     async signIn({ user, account }) {
@@ -84,5 +85,13 @@ export const authOptions: NextAuthOptions = {
       return true;
 
     },
+    async jwt({ token, user }) {
+      if(user) token.role = user.role
+      return token
+    },
+    async session({ session, token }) {
+      if(session?.user) session.user.role = token.role
+      return session
+    }
   },
 };

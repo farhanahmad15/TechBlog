@@ -2,28 +2,6 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
-import { CircleUser, Menu, Package2, Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Sidebar from "@/components/Sidebar";
 
 export default async function Page({
@@ -31,7 +9,7 @@ export default async function Page({
 }: {
   params: { accountsettings: string };
 }) {
-  const session  = await getServerSession();
+  const session = await getServerSession();
   const path =
     params.accountsettings !== undefined
       ? params.accountsettings.toString()
@@ -50,6 +28,11 @@ export default async function Page({
           />
           <p className="font-bold m-2 text-2xl">
             Welcome, {session?.user?.name ?? "User Name"}
+          </p>
+          <p>
+            {
+              session?.user
+            }
           </p>
         </center>
       </div>
