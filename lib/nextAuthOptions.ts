@@ -1,11 +1,15 @@
-
 import type { NextAuthOptions } from "next-auth";
 import GithubProvider, { GithubProfile } from "next-auth/providers/github";
 import GoogleProvider, { GoogleProfile } from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
+import { redirect } from "next/navigation";
 
 export const authOptions: NextAuthOptions = {
+  pages: {
+    signIn: "/signin",
+    error: '/error'
+  },
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID!,
@@ -33,70 +37,63 @@ export const authOptions: NextAuthOptions = {
         // This is where you need to retrieve user data
         // to verify with credentials
         // Docs: https://next-auth.js.org/configuration/providers/credentials
-        const user = await prisma.user.findUnique({
+        const user = await prisma.user.findFirst({
           where: {
             email: credentials?.email,
             uid: credentials?.email,
-            password: credentials?.password
-          }
+            password: credentials?.password,
+          },
         });
         if (user) {
-          return user
-          
+          console.log(user)
+          return user;
         } else {
-          return null;
+          throw new Error('User not found, Please Sign Up!')
         }
       },
     }),
   ],
-  pages: {
-    signIn: "/auth/signin",
-    
-  },
+
   callbacks: {
     async signIn({ user, account }) {
-      if (account?.provider === 'github'){
+      if (account?.provider === "github") {
         const userDB = await prisma.user.upsert({
-          where: { uid: user.email+'_'+user.id },
+          where: { uid: user.email + "_" + user.id },
           update: {},
           create: {
             email: user.email,
-            uid:  user.email+'_'+user.id,
+            uid: user.email + "_" + user.id,
             role: "User",
             name: user.name,
             image: user.image,
-            provider:'Github'
-          }
-        })
-      }
-      else if (account?.provider === 'google'){
+            provider: "Github",
+          },
+        });
+      } else if (account?.provider === "google") {
         const userDB = await prisma.user.upsert({
-          where: { uid: user.email+'_'+user.id },
+          where: { uid: user.email + "_" + user.id },
           update: {},
           create: {
             email: user?.email,
-            uid: user.email+'_'+user.id,
+            uid: user.email + "_" + user.id,
             role: "User",
             name: user.name,
             image: user.image,
-            provider:'Google'
-          }
-        })
+            provider: "Google",
+          },
+        });
       }
       return true;
-
     },
     async jwt({ token, user }) {
       if (user) {
         token.role = user.role; // add the user role to the token
       }
       return token;
-    }
-    ,
+    },
     async session({ session, token }) {
       if (session?.user) session.user.role = token.role; // add the user role to the session
       return session;
-    }
-    
+    },
   },
 };

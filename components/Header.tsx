@@ -22,13 +22,20 @@ import {
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
-import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import ThemeSwitcher from "./ThemeSwitcher";
 import Notifications from "./Notifications";
+import { RxHamburgerMenu } from "react-icons/rx";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 const notifications = [
   {
     name: "Notification",
@@ -109,7 +116,58 @@ function Header() {
   return (
     <>
       <header className="bg-background text-text body-font border-b-gray-300 border-b-[1px]">
-        <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+      {/* mobile */}
+        <div className="flex justify-between items-center md:hidden">
+          <Link
+            href="/"
+            className="flex items-center text-center justify-center h-full title-font font-medium text-text"
+          >
+            <span className="m-2  text-xl font-bold transition-all hover:scale-105">
+              Blog
+            </span>
+          </Link>
+          <Sheet>
+            <SheetTrigger className="m-3">
+            <RxHamburgerMenu />
+            </SheetTrigger>
+            <SheetContent>
+            <nav className="mt-5 float-right flex flex-col  text-base justify-center">
+            <Link
+              href="/"
+              className="m-4 text-text font-semibold transition-all hover:brightness-75"
+            >
+              Home
+            </Link>
+            <Link
+              href="/"
+              className="m-4 text-text font-semibold transition-all hover:brightness-75"
+            >
+              Posts
+            </Link>
+            <Link
+              href="/"
+              className="m-4 text-text font-semibold transition-all hover:brightness-75"
+            >
+              About
+            </Link>
+            {session ? (
+              <></>
+            ) : (
+              <Link
+                href="/"
+                onClick={() => signIn()}
+                className="m-4 text-text font-semibold transition-all hover:brightness-75"
+              >
+                Login
+              </Link>
+            )}
+          </nav>
+            </SheetContent>
+          </Sheet>
+        </div>
+
+          {/* large screens */}
+        <div className="hidden container mx-auto flex-wrap p-5 flex-col md:flex-row items-center md:flex">
           <Link
             href="/"
             className="flex title-font font-medium items-center text-text mb-4 md:mb-0"
@@ -194,7 +252,7 @@ function Header() {
                     <DialogTrigger asChild >
                       <DropdownMenuItem>
                         <span
-                          className="text-red-600 m-1 "
+                          className="text-red-600 m-1 hover:cursor-pointer"
                         >
                           Logout
                         </span>
@@ -207,7 +265,7 @@ function Header() {
                     <DialogTitle>Are You Sure You want to Logout?</DialogTitle>
                   </DialogHeader>
                   <DialogFooter>
-                    <Button variant={"default"} onClick={()=>setModalOpen(false)}>No</Button>
+                    <Button variant={"default"} onClick={() => setModalOpen(false)}>No</Button>
                     <Button variant={"destructive"} onClick={() => signOut()}>Yes</Button>
                   </DialogFooter>
                 </DialogContent>

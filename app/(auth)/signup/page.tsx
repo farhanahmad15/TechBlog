@@ -21,7 +21,7 @@ const initialState = {
 }
 export default function Page() {
   const { data: session } = useSession();
-  const {pending} = useFormStatus()
+  const { pending } = useFormStatus()
   const [state, formAction] = useFormState(signup, initialState)
   if (!session) {
     return (
@@ -93,7 +93,7 @@ export default function Page() {
           </div>
           <div className="mt-4 text-center text-sm">
             Already have an account?{" "}
-            <Link href="/auth/signin" className="underline">
+            <Link href="/signin" className="underline">
               Sign in
             </Link>
           </div>

@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { RedirectType, redirect } from "next/navigation";
 import { useFormState, useFormStatus } from "react-dom";
 import Link from "next/link";
+import { useEffect } from "react";
 
 
 const initialState = {
@@ -22,28 +23,30 @@ const initialState = {
 }
 
 
-function signin(prevState:any,formData: FormData){
- try {
-    signIn('credentials',{
+function signin(prevState: any, formData: FormData) {
+  try {
+    signIn('credentials', {
       email: formData.get('email'),
       password: formData.get('password'),
       callbackUrl: '/'
     })
-    return{message: 'Signin Success'}
- } catch (error) {
-    return {message: `${error}`}
- }
+    return { message: 'Signin Success' }
+  } catch (error) {
+    return { message: `${error}` }
+  }
 }
 
 export default function Page() {
-  const {pending} = useFormStatus()
+  const { pending } = useFormStatus()
   const [state, formAction] = useFormState(signin, initialState)
   const { data: session } = useSession();
+  
+  
 
   if (!session) {
     return (
       <>
-        <Card className="mx-auto mt-2 max-w-sm">
+        <Card className="mx-auto md:mt-2 max-w-sm">
           <CardHeader>
             <CardTitle className="text-2xl text-center">Login</CardTitle>
             <CardDescription className="text-center">
@@ -102,11 +105,11 @@ export default function Page() {
               </form>
             </div>
             <div className="mt-4 text-center text-sm">
-          Don&apos;t have an account?{" "}
-          <Link href="/auth/signup" className="underline">
-            Sign up
-          </Link>
-        </div>
+              Don&apos;t have an account?{" "}
+              <Link href="/signup" className="underline">
+                Sign up
+              </Link>
+            </div>
           </CardContent>
         </Card>
       </>
