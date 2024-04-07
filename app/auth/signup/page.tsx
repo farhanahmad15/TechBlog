@@ -15,11 +15,14 @@ import { Label } from "@/components/ui/label";
 import { RedirectType, redirect } from "next/navigation";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { signup } from "@/app/(actions)/signup";
-import { useFormStatus } from "react-dom";
-
+import { useFormState, useFormStatus } from "react-dom";
+const initialState = {
+  message: '',
+}
 export default function Page() {
   const { data: session } = useSession();
   const {pending} = useFormStatus()
+  const [state, formAction] = useFormState(signup, initialState)
   if (!session) {
     return (
       <Card className="mx-auto mt-2 max-w-sm">
@@ -31,7 +34,7 @@ export default function Page() {
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
-            <form className="grid gap-4" onSubmit={signup}>
+            <form className="grid gap-4" action={formAction}>
               <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
                   <Label htmlFor="first-name">First name</Label>
@@ -40,6 +43,7 @@ export default function Page() {
                     placeholder="Max"
                     required
                     name="firstName"
+                    type="text"
                   />
                 </div>
                 <div className="grid gap-2">
@@ -48,6 +52,7 @@ export default function Page() {
                     id="last-name"
                     placeholder="Robinson"
                     name="lastName"
+                    type="text"
                   />
                 </div>
               </div>
@@ -88,7 +93,7 @@ export default function Page() {
           </div>
           <div className="mt-4 text-center text-sm">
             Already have an account?{" "}
-            <Link href="#" className="underline">
+            <Link href="/auth/signin" className="underline">
               Sign in
             </Link>
           </div>
