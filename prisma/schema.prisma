@@ -10,7 +10,7 @@ datasource db {
 model User {
   id       Int     @id @unique @default(autoincrement())
   uid      String  @unique
-  role     Role  @default(User)
+  role     Role    @default(User)
   name     String
   email    String
   password String?
