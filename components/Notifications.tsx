@@ -1,10 +1,7 @@
+import { NotificationProps } from '@/types'
 import React from 'react'
-type Props = {
-    title: string,
-    description: string,
-    date: Date
-}
-export default function Notifications({ title, description, date }: Props) {
+
+export default function Notifications({ title, description, date }: NotificationProps) {
     return (
         <>
             {/* TODO:MAKE IT SCROLLABLE */}

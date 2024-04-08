@@ -1,9 +1,7 @@
+import { LinkArray } from '@/types'
 import Link from 'next/link'
 import React from 'react'
-type LinkArray ={
-    name: string,
-    link: string
-}
+
 export default function Sidebar({children, links}:{children:React.ReactNode, links: LinkArray[]}) {
   return (
     <>
