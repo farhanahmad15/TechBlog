@@ -13,7 +13,6 @@ model User {
   role     Role    @default(User)
   name     String
   email    String
-  password String?
   image    String  @default("https://dummyimage.com/400x400")
   provider String
 }

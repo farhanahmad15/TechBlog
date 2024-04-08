@@ -11,9 +11,8 @@ async function main() {
       uid: "3",
       role: "User",
       name: 'Test User',
-      password: `$2y$12$GBfcgD6XwaMferSOdYGiduw3Awuo95QAPhxFE0oNJ.Ds8qj3pzEZy`,
       image: 'https://dummyimage.com/400x400',
-      provider:'Credentials'
+      provider:'Google'
     }
   })
 }

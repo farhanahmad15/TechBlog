@@ -11,7 +11,6 @@ declare module "next-auth" {
       role: "User" | "Admin"; // change from Role to "User" | "Admin"
       name: string;
       email: string;
-      password: string | null;
       image?: string | "https://dummyimage.com/400x400";
       provider: string; // 
     };
@@ -23,7 +22,6 @@ declare module "next-auth" {
     role: "User" | "Admin"; // change from Role to "User" | "Admin"
     name: string;
     email: string;
-    password: string | null;
     image?: string | "https://dummyimage.com/400x400";
     provider: string; // 
   }
@@ -36,7 +34,7 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
   interface JWT extends DefaultJWT {
     role: "User" | "Admin";
-    provider: "Google" | "Github" | "Credentials"
+    provider: "Google" | "Github" 
   
   }
   

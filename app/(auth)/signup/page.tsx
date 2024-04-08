@@ -10,77 +10,30 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
 import { RedirectType, redirect } from "next/navigation";
 import { FaGithub, FaGoogle } from "react-icons/fa";
-import { signup } from "@/app/(actions)/signup";
-import { useFormState, useFormStatus } from "react-dom";
-const initialState = {
-  message: '',
-}
+
 export default function Page() {
   const { data: session } = useSession();
-  const { pending } = useFormStatus()
-  const [state, formAction] = useFormState(signup, initialState)
   if (!session) {
     return (
-      <Card className="mx-auto mt-2 max-w-sm">
+      <Card className="mx-auto max-w-sm md:mt-2">
         <CardHeader>
-          <CardTitle className="text-xl">Sign Up</CardTitle>
-          <CardDescription>
-            Enter your information to create an account
+          <CardTitle className="text-center text-2xl">Sign Up</CardTitle>
+          <CardDescription className="text-center">
+            Sign up with TechBlog
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
-            <form className="grid gap-4" action={formAction}>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="first-name">First name</Label>
-                  <Input
-                    id="first-name"
-                    placeholder="Max"
-                    required
-                    name="firstName"
-                    type="text"
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="last-name">Last name</Label>
-                  <Input
-                    id="last-name"
-                    placeholder="Robinson"
-                    name="lastName"
-                    type="text"
-                  />
-                </div>
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
-                  required
-                  name="email"
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="password">Password</Label>
-                <Input id="password" type="password" name="password" />
-              </div>
-              <Button type="submit" className="w-full" disabled={pending} >
-                Create an account
-              </Button>
-            </form>
             <Button
               onClick={() => signIn("github")}
               variant="outline"
               className="w-full"
             >
               <FaGithub className="mr-3" />
-              Signup with GitHub
+              Sign up with GitHub
             </Button>
             <Button
               onClick={() => signIn("google")}
@@ -88,7 +41,7 @@ export default function Page() {
               className="w-full"
             >
               <FaGoogle className="mr-3" />
-              Signup with Google
+              Sign up with Google
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">

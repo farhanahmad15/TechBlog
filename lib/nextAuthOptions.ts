@@ -1,7 +1,6 @@
 import type { NextAuthOptions } from "next-auth";
 import GithubProvider, { GithubProfile } from "next-auth/providers/github";
 import GoogleProvider, { GoogleProfile } from "next-auth/providers/google";
-import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
@@ -19,39 +18,7 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_ID!,
       clientSecret: process.env.GOOGLE_SECRET!,
     }),
-    CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        email: {
-          label: "Email:",
-          type: "email",
-          placeholder: "john@doe.com",
-        },
-        password: {
-          label: "Password:",
-          type: "password",
-        },
-      },
-
-      async authorize(credentials) {
-        // This is where you need to retrieve user data
-        // to verify with credentials
-        // Docs: https://next-auth.js.org/configuration/providers/credentials
-        const user = await prisma.user.findFirst({
-          where: {
-            email: credentials?.email,
-            uid: credentials?.email,
-            password: credentials?.password,
-          },
-        });
-        if (user) {
-          console.log(user)
-          return user;
-        } else {
-          throw new Error('User not found, Please Sign Up!')
-        }
-      },
-    }),
+    
   ],
 
   callbacks: {
