@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card";
 
 import { RedirectType, redirect } from "next/navigation";
-import { FaGithub, FaGoogle } from "react-icons/fa";
+import { FaDiscord, FaGithub, FaGoogle } from "react-icons/fa";
 
 export default function Page() {
   const { data: session } = useSession();
@@ -28,6 +28,14 @@ export default function Page() {
         <CardContent>
           <div className="grid gap-4">
             <Button
+              onClick={() => signIn("google")}
+              variant="outline"
+              className="w-full"
+            >
+              <FaGoogle className="mr-3" />
+              Sign up with Google
+            </Button>
+            <Button
               onClick={() => signIn("github")}
               variant="outline"
               className="w-full"
@@ -36,12 +44,12 @@ export default function Page() {
               Sign up with GitHub
             </Button>
             <Button
-              onClick={() => signIn("google")}
+              onClick={() => signIn("discord")}
               variant="outline"
               className="w-full"
             >
-              <FaGoogle className="mr-3" />
-              Sign up with Google
+              <FaDiscord className="mr-3" />
+              Sign up with Discord
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">

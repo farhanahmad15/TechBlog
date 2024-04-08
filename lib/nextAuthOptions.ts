@@ -1,13 +1,15 @@
 import type { NextAuthOptions } from "next-auth";
 import GithubProvider, { GithubProfile } from "next-auth/providers/github";
 import GoogleProvider, { GoogleProfile } from "next-auth/providers/google";
+import DiscordProvider from "next-auth/providers/discord";
+
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
 export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/signin",
-    error: '/error'
+    error: "/error",
   },
   providers: [
     GithubProvider({
@@ -18,11 +20,16 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_ID!,
       clientSecret: process.env.GOOGLE_SECRET!,
     }),
-    
+    DiscordProvider({
+      clientId: process.env.DISCORD_CLIENT_ID!,
+      clientSecret: process.env.DISCORD_CLIENT_SECRET!,
+    }),
   ],
 
   callbacks: {
     async signIn({ user, account }) {
+      console.log(user);
+      console.log(account);
       if (account?.provider === "github") {
         const userDB = await prisma.user.upsert({
           where: { uid: user.email + "_" + user.id },
@@ -47,6 +54,20 @@ export const authOptions: NextAuthOptions = {
             name: user.name,
             image: user.image,
             provider: "Google",
+          },
+        });
+      }
+      else if (account?.provider === "discord") {
+        const userDB = await prisma.user.upsert({
+          where: { uid: user.email + "_" + user.id },
+          update: {},
+          create: {
+            email: user?.email,
+            uid: user.email + "_" + user.id,
+            role: "User",
+            name: user.name,
+            image: user.image,
+            provider: "Discord",
           },
         });
       }

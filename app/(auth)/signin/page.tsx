@@ -1,7 +1,7 @@
 "use client";
 import { signIn, useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
-import { FaGithub, FaGoogle } from "react-icons/fa";
+import { FaDiscord, FaGithub, FaGoogle } from "react-icons/fa";
 
 import {
   Card,
@@ -29,6 +29,14 @@ export default function Page() {
           <CardContent>
             <div className="grid gap-4">
               <Button
+                onClick={() => signIn("google")}
+                variant="outline"
+                className="w-full"
+              >
+                <FaGoogle className="mr-3" />
+                Login with Google
+              </Button>
+              <Button
                 onClick={() => signIn("github")}
                 variant="outline"
                 className="w-full"
@@ -37,12 +45,12 @@ export default function Page() {
                 Login with GitHub
               </Button>
               <Button
-                onClick={() => signIn("google")}
+                onClick={() => signIn("discord")}
                 variant="outline"
                 className="w-full"
               >
-                <FaGoogle className="mr-3" />
-                Login with Google
+                <FaDiscord className="mr-3" />
+                Login with Discord
               </Button>
 
 
