@@ -11,26 +11,45 @@ export const authOptions: NextAuthOptions = {
     signIn: "/signin",
     error: "/error",
   },
+  debug: true,
   providers: [
     GithubProvider({
-      clientId: process.env.GITHUB_ID!,
-      clientSecret: process.env.GITHUB_SECRET!,
+      profile(profile: GithubProfile) {
+        return {
+          uid: profile.email + "_" + profile.id,
+          email: profile.email || "No Email Provided",
+          name: profile.login,
+          role: "User",
+          provider: "Github",
+          image: profile.avatar_url,
+        };
+      },
+      clientId: process.env.GITHUB_ID as string,
+      clientSecret: process.env.GITHUB_SECRET as string,
     }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID!,
-      clientSecret: process.env.GOOGLE_SECRET!,
+      profile(profile: GoogleProfile) {
+        return {
+          uid: profile.email + "_" + profile.sub,
+          email: profile.email || "No Email Provided",
+          name: profile.name,
+          role: "User",
+          provider: "Google",
+          image: profile.picture,
+          id: Number(profile.sub)
+        };
+      },
+      clientId: process.env.GOOGLE_ID as string,
+      clientSecret: process.env.GOOGLE_SECRET as string,
     }),
     DiscordProvider({
-      clientId: process.env.DISCORD_CLIENT_ID!,
-      clientSecret: process.env.DISCORD_CLIENT_SECRET!,
+      clientId: process.env.DISCORD_CLIENT_ID as string,
+      clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
     }),
-    
   ],
 
   callbacks: {
     async signIn({ user, account }) {
-      console.log(user);
-      console.log(account);
       if (account?.provider === "github") {
         const userDB = await prisma.user.upsert({
           where: { uid: user.email + "_" + user.id },
@@ -75,12 +94,18 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role; // add the user role to the token
+        token.role = user.role
+        token.provider = user.provider
+        token.uid = user.uid
       }
       return token;
     },
     async session({ session, token }) {
-      if (session?.user) session.user.role = token.role; // add the user role to the session
+      if (session?.user) {
+        session.user.role = token.role
+        session.user.provider = token.provider
+        session.user.uid = token.uid
+      } // add the user role to the session
       return session;
     },
   },

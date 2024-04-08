@@ -3,13 +3,15 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import Sidebar from "@/components/Sidebar";
+import { authOptions } from "@/lib/nextAuthOptions";
 
 export default async function Page({
   params,
 }: {
   params: { accountsettings: string };
 }) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
+  
   const path =
     params.accountsettings !== undefined
       ? params.accountsettings.toString()
@@ -29,9 +31,9 @@ export default async function Page({
           <p className="font-bold m-2 text-2xl">
             Welcome, {session?.user?.name ?? "User Name"}
           </p>
-          <p>
-            
-          </p>
+          <p>Your role is {session?.user?.role}</p>
+          <p>You signed up using {session?.user?.provider}</p>
+          <p>You Email is {session?.user?.email}</p>
         </center>
       </div>
     );

@@ -6,7 +6,7 @@ import { JWT, DefaultJWT } from "next-auth/jwt";
 declare module "next-auth" {
   interface Session {
     user: {
-      id: number, // change from Number to number
+      id?: number, // change from Number to number
       uid: string;
       role: "User" | "Admin"; // change from Role to "User" | "Admin"
       name: string;
@@ -17,7 +17,7 @@ declare module "next-auth" {
   }
 
   interface User {
-    id: number, // change from Number to number
+    id?: number, // change from Number to number
     uid: string;
     role: "User" | "Admin"; // change from Role to "User" | "Admin"
     name: string;
@@ -32,10 +32,13 @@ declare module "next-auth" {
 }
 
 declare module "next-auth/jwt" {
-  interface JWT extends DefaultJWT {
+  interface JWT {
+    name: string;
+    email: string;
+    image?: string | "https://dummyimage.com/400x400";
     role: "User" | "Admin";
-    provider: string
-  
+    provider: string;
+    uid: string;
   }
   
 }

@@ -8,7 +8,7 @@ async function main() {
     update: {},
     create: {
       email: 'test@test.com',
-      uid: "3",
+      uid: "test@test.com",
       role: "User",
       name: 'Test User',
       image: 'https://dummyimage.com/400x400',

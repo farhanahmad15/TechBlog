@@ -336,8 +336,8 @@ function Header() {
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DialogTrigger asChild>
-                      <DropdownMenuItem>
-                        <span className="m-1 text-red-600 hover:cursor-pointer">
+                      <DropdownMenuItem className="group">
+                        <span className="m-1 text-red-600 group-hover:cursor-pointer">
                           Logout
                         </span>
                       </DropdownMenuItem>
