@@ -24,6 +24,7 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.DISCORD_CLIENT_ID!,
       clientSecret: process.env.DISCORD_CLIENT_SECRET!,
     }),
+    
   ],
 
   callbacks: {
@@ -56,8 +57,7 @@ export const authOptions: NextAuthOptions = {
             provider: "Google",
           },
         });
-      }
-      else if (account?.provider === "discord") {
+      } else if (account?.provider === "discord") {
         const userDB = await prisma.user.upsert({
           where: { uid: user.email + "_" + user.id },
           update: {},

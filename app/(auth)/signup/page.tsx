@@ -51,6 +51,7 @@ export default function Page() {
               <FaDiscord className="mr-3" />
               Sign up with Discord
             </Button>
+            
           </div>
           <div className="mt-4 text-center text-sm">
             Already have an account?{" "}
