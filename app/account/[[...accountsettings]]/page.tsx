@@ -34,6 +34,7 @@ export default async function Page({
           <p>Your role is {session?.user?.role}</p>
           <p>You signed up using {session?.user?.provider}</p>
           <p>You Email is {session?.user?.email}</p>
+          <p>You ID is {session?.user?.id}</p>
         </center>
       </div>
     );

@@ -5,7 +5,7 @@ export default withAuth(
     function middleware(req){
      console.log(req.nextauth.token?.role)   
      console.log(req.nextauth.token?.provider)   
-     console.log(req.nextauth.token?.uid)   
+     console.log(req.nextauth.token?.id)   
     }
 )
 

@@ -16,7 +16,7 @@ export const authOptions: NextAuthOptions = {
     GithubProvider({
       profile(profile: GithubProfile) {
         return {
-          uid: profile.email + "_" + profile.id,
+          id: profile.email + "_" + 'github',
           email: profile.email || "No Email Provided",
           name: profile.login,
           role: "User",
@@ -30,13 +30,12 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       profile(profile: GoogleProfile) {
         return {
-          uid: profile.email + "_" + profile.sub,
+          id: profile.email + "_" + 'google',
           email: profile.email || "No Email Provided",
           name: profile.name,
           role: "User",
           provider: "Google",
           image: profile.picture,
-          id: Number(profile.sub)
         };
       },
       clientId: process.env.GOOGLE_ID as string,
@@ -52,11 +51,11 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user, account }) {
       if (account?.provider === "github") {
         const userDB = await prisma.user.upsert({
-          where: { uid: user.email + "_" + user.id },
+          where: { id: user.email + "_" + "github" },
           update: {},
           create: {
             email: user.email,
-            uid: user.email + "_" + user.id,
+            id: user.email + "_" + "github",
             role: "User",
             name: user.name,
             image: user.image,
@@ -65,11 +64,11 @@ export const authOptions: NextAuthOptions = {
         });
       } else if (account?.provider === "google") {
         const userDB = await prisma.user.upsert({
-          where: { uid: user.email + "_" + user.id },
+          where: { id: user.email + "_" + "google" },
           update: {},
           create: {
             email: user?.email,
-            uid: user.email + "_" + user.id,
+            id: user.email + "_" + "google",
             role: "User",
             name: user.name,
             image: user.image,
@@ -78,11 +77,11 @@ export const authOptions: NextAuthOptions = {
         });
       } else if (account?.provider === "discord") {
         const userDB = await prisma.user.upsert({
-          where: { uid: user.email + "_" + user.id },
+          where: { id: user.email + "_" + "discord" },
           update: {},
           create: {
             email: user?.email,
-            uid: user.email + "_" + user.id,
+            id: user.email + "_" + "discord",
             role: "User",
             name: user.name,
             image: user.image,
@@ -94,17 +93,17 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role
-        token.provider = user.provider
-        token.uid = user.uid
+        token.role = user.role;
+        token.provider = user.provider;
+        token.id = user.id;
       }
       return token;
     },
     async session({ session, token }) {
       if (session?.user) {
-        session.user.role = token.role
-        session.user.provider = token.provider
-        session.user.uid = token.uid
+        session.user.role = token.role;
+        session.user.provider = token.provider;
+        session.user.id = token.id;
       } // add the user role to the session
       return session;
     },

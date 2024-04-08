@@ -8,12 +8,11 @@ datasource db {
 }
 
 model User {
-  id       Int     @id @unique @default(autoincrement())
-  uid      String  @unique
-  role     Role    @default(User)
+  id       String @id @unique
+  role     Role   @default(User)
   name     String
   email    String
-  image    String  @default("https://dummyimage.com/400x400")
+  image    String @default("https://dummyimage.com/400x400")
   provider String
 }
 
