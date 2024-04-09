@@ -115,7 +115,7 @@ function Header() {
   const [modalOpen, setModalOpen] = useState(false);
   return (
     <>
-      <header className="text-text body-font border-b-[1px] border-b-gray-300 bg-background">
+      <header className="text-text body-font border-b-[1px] border-b-gray-300  bg-background dark:border-b-blue-950">
         {/* mobile */}
         <div className="flex items-center justify-between md:hidden">
           <Link
@@ -127,127 +127,126 @@ function Header() {
             </span>
           </Link>
           <div>
-          {session ? (
+            {session ? (
+              <>
+                {/* NOTIFICATION MENU*/}
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="mx-2">
+                    <IoNotifications className="text-text size-4" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent asChild>
+                    <ScrollArea className="m-4 h-96 w-3/4 md:h-80">
+                      {notifications.map((notification, index) => (
+                        <Notifications
+                          key={index}
+                          title={notification.name}
+                          description={notification.description}
+                          date={notification.date}
+                        />
+                      ))}
+                    </ScrollArea>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                {/* THEME SWITCH */}
+                <ThemeSwitcher className="mx-2 my-1" />
+                {/* SETTINGS */}
+              </>
+            ) : (
+              <ThemeSwitcher />
+            )}
+            <Sheet>
+              <SheetTrigger className="m-3">
+                <RxHamburgerMenu />
+              </SheetTrigger>
+              <SheetContent>
+                {session ? (
                   <>
-                    {/* NOTIFICATION MENU*/}
-                    <DropdownMenu>
-                      <DropdownMenuTrigger className="mx-2">
-                        <IoNotifications className="text-text size-4" />
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent asChild>
-                        <ScrollArea className="m-4 h-96 w-3/4 md:h-80">
-                          {notifications.map((notification, index) => (
-                            <Notifications
-                              key={index}
-                              title={notification.name}
-                              description={notification.description}
-                              date={notification.date}
-                            />
-                          ))}
-                        </ScrollArea>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                    {/* THEME SWITCH */}
-                    <ThemeSwitcher className="mx-2 my-1" />
-                    {/* SETTINGS */}
+                    <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger className="mx-2">
+                          <Avatar className="size-10">
+                            <AvatarImage src={session?.user?.image ?? ""} />
+                            <AvatarFallback>
+                              {session?.user?.name ?? ""}
+                            </AvatarFallback>
+                          </Avatar>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuItem>
+                            <Link href="/account">My Account</Link>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <Link href="/">My Posts</Link>
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DialogTrigger asChild>
+                            <DropdownMenuItem>
+                              <span className=" m-1 text-red-600 hover:cursor-pointer">
+                                Logout
+                              </span>
+                            </DropdownMenuItem>
+                          </DialogTrigger>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>
+                            Are You Sure You want to Logout?
+                          </DialogTitle>
+                        </DialogHeader>
+                        <DialogFooter>
+                          <Button
+                            variant={"default"}
+                            onClick={() => setModalOpen(false)}
+                          >
+                            No
+                          </Button>
+                          <Button
+                            variant={"destructive"}
+                            onClick={() => signOut()}
+                          >
+                            Yes
+                          </Button>
+                        </DialogFooter>
+                      </DialogContent>
+                    </Dialog>
                   </>
                 ) : (
-                  <ThemeSwitcher/>
-                )}
-          <Sheet>
-            <SheetTrigger className="m-3">
-              <RxHamburgerMenu />
-            </SheetTrigger>
-            <SheetContent>
-              {session ? (
-                <>
-                  <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger className="mx-2">
-                        <Avatar className="size-10">
-                          <AvatarImage src={session?.user?.image ?? ""} />
-                          <AvatarFallback>
-                            {session?.user?.name ?? ""}
-                          </AvatarFallback>
-                        </Avatar>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent>
-                        <DropdownMenuItem>
-                          <Link href="/account">My Account</Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Link href="/">My Posts</Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DialogTrigger asChild>
-                          <DropdownMenuItem>
-                            <span className=" m-1 text-red-600 hover:cursor-pointer">
-                              Logout
-                            </span>
-                          </DropdownMenuItem>
-                        </DialogTrigger>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>
-                          Are You Sure You want to Logout?
-                        </DialogTitle>
-                      </DialogHeader>
-                      <DialogFooter>
-                        <Button
-                          variant={"default"}
-                          onClick={() => setModalOpen(false)}
-                        >
-                          No
-                        </Button>
-                        <Button
-                          variant={"destructive"}
-                          onClick={() => signOut()}
-                        >
-                          Yes
-                        </Button>
-                      </DialogFooter>
-                    </DialogContent>
-                  </Dialog>
-                </>
-              ) : (
-                <></>
-              )}
-              <nav className="mt-5 flex w-full flex-col  justify-center text-base">
-                <Link
-                  href="/"
-                  className="text-text  h-full w-full p-4 font-semibold transition-all focus:bg-accent"
-                >
-                  Home
-                </Link>
-                <Link
-                  href="/"
-                  className="text-text  h-full w-full p-4 font-semibold transition-all focus:bg-accent"
-                >
-                  Posts
-                </Link>
-                <Link
-                  href="/"
-                  className="text-text  h-full w-full p-4 font-semibold transition-all focus:bg-accent"
-                >
-                  About
-                </Link>
-                {session ? (
                   <></>
-                ) : (
+                )}
+                <nav className="mt-5 flex w-full flex-col  justify-center text-base">
                   <Link
                     href="/"
-                    onClick={() => signIn()}
                     className="text-text  h-full w-full p-4 font-semibold transition-all focus:bg-accent"
                   >
-                    Login
+                    Home
                   </Link>
-                )}
-              </nav>
-
-            </SheetContent>
-          </Sheet>
+                  <Link
+                    href="/"
+                    className="text-text  h-full w-full p-4 font-semibold transition-all focus:bg-accent"
+                  >
+                    Posts
+                  </Link>
+                  <Link
+                    href="/about"
+                    className="text-text  h-full w-full p-4 font-semibold transition-all focus:bg-accent"
+                  >
+                    About
+                  </Link>
+                  {session ? (
+                    <></>
+                  ) : (
+                    <Link
+                      href="/"
+                      onClick={() => signIn()}
+                      className="text-text  h-full w-full p-4 font-semibold transition-all focus:bg-accent"
+                    >
+                      Login
+                    </Link>
+                  )}
+                </nav>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
 
@@ -276,7 +275,7 @@ function Header() {
               Posts
             </Link>
             <Link
-              href="/"
+              href="/about"
               className="text-text mr-5 font-semibold transition-all hover:brightness-75"
             >
               About
@@ -346,7 +345,9 @@ function Header() {
                 </DropdownMenu>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Are You Sure You want to Sign out?</DialogTitle>
+                    <DialogTitle>
+                      Are You Sure You want to Sign out?
+                    </DialogTitle>
                   </DialogHeader>
                   <DialogFooter>
                     <Button
