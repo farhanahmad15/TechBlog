@@ -1,7 +1,7 @@
 import type { NextAuthOptions } from "next-auth";
 import GithubProvider, { GithubProfile } from "next-auth/providers/github";
 import GoogleProvider, { GoogleProfile } from "next-auth/providers/google";
-import DiscordProvider from "next-auth/providers/discord";
+import DiscordProvider, {DiscordProfile} from "next-auth/providers/discord";
 
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
@@ -16,7 +16,7 @@ export const authOptions: NextAuthOptions = {
     GithubProvider({
       profile(profile: GithubProfile) {
         return {
-          id: profile.email + "_" + 'github',
+          id: profile.email + "_" + "github",
           email: profile.email || "No Email Provided",
           name: profile.login,
           role: "User",
@@ -30,7 +30,7 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       profile(profile: GoogleProfile) {
         return {
-          id: profile.email + "_" + 'google',
+          id: profile.email + "_" + "google",
           email: profile.email || "No Email Provided",
           name: profile.name,
           role: "User",
@@ -42,6 +42,16 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_SECRET as string,
     }),
     DiscordProvider({
+      profile(profile: DiscordProfile) {
+        return {
+          id: profile.email + "_" + "discord",
+          email: profile.email || "No Email Provided",
+          name: profile.username,
+          role: "User",
+          provider: "Discord",
+          image: profile.image_url,
+        };
+      },
       clientId: process.env.DISCORD_CLIENT_ID as string,
       clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
     }),
