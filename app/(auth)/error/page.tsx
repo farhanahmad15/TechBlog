@@ -6,6 +6,6 @@ export default function page() {
     const searchParams = useSearchParams()
     const error = searchParams.get('error')
   return (
-    <h1 className='text-center mt-[20%] text-5xl font-extrabold'>Error: {error?.toString()}</h1>
+    <h1 className='text-center mt-[20%] text-5xl font-extrabold'>Error {error?.toString()}</h1>
   )
 }

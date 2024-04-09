@@ -21,7 +21,7 @@ export default function Page() {
   if (!session) {
     return (
       <>
-        <Tabs defaultValue="signin" className="w-[400px] mx-auto mt-2" value={tab} onValueChange={(val) => setTab(val)}>
+        <Tabs defaultValue="signin" className="max-w-[400px] mx-auto mt-2" value={tab} onValueChange={(val) => setTab(val)}>
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="signin">Sign in</TabsTrigger>
             <TabsTrigger value="signup">Sign up</TabsTrigger>
