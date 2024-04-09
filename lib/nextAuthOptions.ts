@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 
 export const authOptions: NextAuthOptions = {
   pages: {
-    signIn: "/signin",
+    signIn: "/auth",
     error: "/error",
   },
   debug: true,

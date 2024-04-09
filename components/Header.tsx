@@ -289,7 +289,7 @@ function Header() {
                 onClick={() => signIn()}
                 className="text-text mr-5 font-semibold transition-all hover:brightness-75"
               >
-                Login
+                Sign in
               </Link>
             )}
           </nav>
@@ -338,7 +338,7 @@ function Header() {
                     <DialogTrigger asChild>
                       <DropdownMenuItem className="group">
                         <span className="m-1 text-red-600 group-hover:cursor-pointer">
-                          Logout
+                          Sign out
                         </span>
                       </DropdownMenuItem>
                     </DialogTrigger>
@@ -346,7 +346,7 @@ function Header() {
                 </DropdownMenu>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Are You Sure You want to Logout?</DialogTitle>
+                    <DialogTitle>Are You Sure You want to Sign out?</DialogTitle>
                   </DialogHeader>
                   <DialogFooter>
                     <Button
