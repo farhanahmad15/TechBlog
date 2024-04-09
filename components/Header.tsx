@@ -127,8 +127,9 @@ function Header() {
             </span>
           </Link>
           <div>
+            <div className="flex">
             {session ? (
-              <>
+              <div className="flex">
                 {/* NOTIFICATION MENU*/}
                 <DropdownMenu>
                   <DropdownMenuTrigger className="mx-2">
@@ -150,7 +151,7 @@ function Header() {
                 {/* THEME SWITCH */}
                 <ThemeSwitcher className="mx-2 my-1" />
                 {/* SETTINGS */}
-              </>
+              </div>
             ) : (
               <ThemeSwitcher />
             )}
@@ -181,8 +182,8 @@ function Header() {
                           <DropdownMenuSeparator />
                           <DialogTrigger asChild>
                             <DropdownMenuItem>
-                              <span className=" m-1 text-red-600 hover:cursor-pointer">
-                                Logout
+                              <span className=" text-red-600 hover:cursor-pointer">
+                                Sign out
                               </span>
                             </DropdownMenuItem>
                           </DialogTrigger>
@@ -191,19 +192,21 @@ function Header() {
                       <DialogContent>
                         <DialogHeader>
                           <DialogTitle>
-                            Are You Sure You want to Logout?
+                            Are You Sure You want to Sign out?
                           </DialogTitle>
                         </DialogHeader>
                         <DialogFooter>
                           <Button
                             variant={"default"}
                             onClick={() => setModalOpen(false)}
+                            className="w-10"
                           >
                             No
                           </Button>
                           <Button
                             variant={"destructive"}
                             onClick={() => signOut()}
+                            className="w-10"
                           >
                             Yes
                           </Button>
@@ -247,6 +250,7 @@ function Header() {
                 </nav>
               </SheetContent>
             </Sheet>
+            </div>
           </div>
         </div>
 
@@ -336,7 +340,7 @@ function Header() {
                     <DropdownMenuSeparator />
                     <DialogTrigger asChild>
                       <DropdownMenuItem className="group">
-                        <span className="m-1 text-red-600 group-hover:cursor-pointer">
+                        <span className=" text-red-600 group-hover:cursor-pointer">
                           Sign out
                         </span>
                       </DropdownMenuItem>
