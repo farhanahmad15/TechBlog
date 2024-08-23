@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/styles/globals.css";
-import { ThemeProvider } from "@/components/theme-provider"
+import { ThemeProvider } from "@/components/ThemeProvider"
 import Header from "@/components/Header";
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/components/SessionProvider"
@@ -25,7 +25,7 @@ export default async function RootLayout({
       <body className={inter.className}>
       <ThemeProvider
             attribute="class"
-            defaultTheme="system"
+            defaultTheme="dark"
             enableSystem
             disableTransitionOnChange
             >

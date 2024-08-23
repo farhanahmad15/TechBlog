@@ -4,7 +4,6 @@ import GoogleProvider, { GoogleProfile } from "next-auth/providers/google";
 import DiscordProvider, {DiscordProfile} from "next-auth/providers/discord";
 
 import { prisma } from "@/lib/prisma";
-import { redirect } from "next/navigation";
 
 export const authOptions: NextAuthOptions = {
   pages: {
@@ -15,9 +14,12 @@ export const authOptions: NextAuthOptions = {
   providers: [
     GithubProvider({
       profile(profile: GithubProfile) {
+        if(!profile.email){
+          throw new Error("Yes email provided");
+        }
         return {
           id: profile.email + "_" + "github",
-          email: profile.email || "No Email Provided",
+          email: profile.email,
           name: profile.login,
           role: "User",
           provider: "Github",
@@ -31,7 +33,7 @@ export const authOptions: NextAuthOptions = {
       profile(profile: GoogleProfile) {
         return {
           id: profile.email + "_" + "google",
-          email: profile.email || "No Email Provided",
+          email: profile.email,
           name: profile.name,
           role: "User",
           provider: "Google",

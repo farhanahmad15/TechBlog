@@ -1,6 +1,7 @@
 import { LinkArray } from '@/types'
 import Link from 'next/link'
 import React from 'react'
+import { v4 as uuid } from 'uuid'
 
 export default function Sidebar({children, links}:{children:React.ReactNode, links: LinkArray[]}) {
   return (
@@ -14,7 +15,7 @@ export default function Sidebar({children, links}:{children:React.ReactNode, lin
             <nav className="grid gap-4 text-sm text-muted-foreground">
              {
                 links.map((link,index) =>(
-                    <Link className='transition-all hover:font-semibold text-primary' href={link.link} key={index}>{link.name}</Link>
+                    <Link className='transition-all hover:font-semibold text-primary' href={link.link} key={uuid()}>{link.name}</Link>
                 ))
              }
             </nav>
